@@ -23,6 +23,13 @@ namespace ConsoleUI
                 Console.WriteLine(car.Description);
             }
 
+            Console.WriteLine("********************");
+            // Print a car which has specific id
+            foreach (var car in carManager.GetById(4))
+            {
+                Console.WriteLine(car.Description);
+            }
+
         }
     }
 }
