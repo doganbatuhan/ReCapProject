@@ -20,6 +20,34 @@ namespace ConsoleUI
 
             //GetCarByIdTest();
 
+
+            //GetCarDetailWithMessageTest();
+
+            GetCustomersDetailTest();
+        }
+
+        private static void GetCustomersDetailTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+
+            var result = customerManager.GetCustomerDetails();
+
+            if (result.Success)
+            {
+                foreach (var customer in result.Data)
+                {
+                    Console.WriteLine("{0} {1} {2}", customer.FirstName,
+                        customer.LastName, customer.CompanyName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void GetCarDetailWithMessageTest()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
 
             var result = carManager.GetCarDetails();
