@@ -20,13 +20,28 @@ namespace ConsoleUI
 
             //GetCarByIdTest();
 
+            CarManager carManager = new CarManager(new EfCarDal());
+
+            var result = carManager.GetCarDetails();
+
+            if (result.Success)
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void GetCarByIdTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            Car car = carManager.GeyById(7);
+            Car car = carManager.GeyById(7).Data;
             Console.WriteLine(car.Description + " " + car.DailyPrice);
         }
 
@@ -71,7 +86,7 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
 
             // Print whole items of cars
-            foreach (var car in carManager.GetCarDetails())
+            foreach (var car in carManager.GetCarDetails().Data)
             {
                 Console.WriteLine("{0} : {1} : {2} : {3}", car.CarName,
                     car.BrandName, car.ColorName, car.DailyPrice);
