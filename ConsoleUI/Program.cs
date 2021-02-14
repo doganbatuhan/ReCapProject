@@ -23,7 +23,30 @@ namespace ConsoleUI
 
             //GetCarDetailWithMessageTest();
 
-            GetCustomersDetailTest();
+            //GetCustomersDetailTest();
+
+
+            RentalGetAllTest();
+
+        }
+
+        private static void RentalGetAllTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            var result = rentalManager.GetAll();
+
+            if (result.Success)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine(rental.ReturnDate);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void GetCustomersDetailTest()
@@ -69,7 +92,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            Car car = carManager.GeyById(7).Data;
+            Car car = carManager.GetById(7).Data;
             Console.WriteLine(car.Description + " " + car.DailyPrice);
         }
 

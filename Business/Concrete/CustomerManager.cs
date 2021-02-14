@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
         }
 
-        public IDataResult<Customer> GeyById(int id)
+        public IDataResult<Customer> GetById(int id)
         {
             return new SuccessDataResult<Customer>(_customerDal.Get(c => c.UserId == id));
         }

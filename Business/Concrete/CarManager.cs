@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager : ICarSevice
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
 
@@ -68,7 +68,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public IDataResult<Car> GeyById(int id)
+        public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
