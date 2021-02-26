@@ -26,7 +26,19 @@ namespace ConsoleUI
             //GetCustomersDetailTest();
 
 
-            RentalGetAllTest();
+            //RentalGetAllTest();
+            var path = System.IO.Directory.GetCurrentDirectory();
+            Console.WriteLine(path);
+            path = System.IO.Directory.GetParent(path).ToString();
+            Console.WriteLine(path);
+            path = System.IO.Directory.GetParent(path).ToString();
+            Console.WriteLine(path);
+            path = System.IO.Directory.GetParent(path).ToString();
+            Console.WriteLine(path);
+            path = System.IO.Directory.GetParent(path).ToString();
+            Console.WriteLine(path);
+
+
 
         }
 

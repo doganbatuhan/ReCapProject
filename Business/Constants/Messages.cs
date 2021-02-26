@@ -13,5 +13,6 @@ namespace Business.Constants
         public static string CarUpdated = "Araba güncellendi";
         public static string MaintenanceTime = "Sistem bakımda";
         public static string CarsListed = "Arabalar listelendi";
+        public static string ImageCountOfCarError = "Bir arabanın en fazla 5 resmi olabilir";
     }
 }
