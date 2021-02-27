@@ -10,6 +10,7 @@ namespace WebAPI.Models
     {
         public IFormFile Files { get; set; }
         public int CarId { get; set; }
+        public int Id { get; set; }
 
     }
 }

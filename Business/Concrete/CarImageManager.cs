@@ -1,11 +1,14 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Business;
+using Core.Utilities.FileHelper;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Business.Concrete
@@ -19,7 +22,7 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
-        public IResult Add(CarImage image)
+        public IResult Add(CarImage image, IFormFile file)
         {
             var result = BusinessRules.Run(CheckIfImageCountOfCarExceeded(image.CarId));
 
@@ -27,13 +30,17 @@ namespace Business.Concrete
             {
                 return result;
             }
-
+            var path = FileProcess.Create(file, Paths.ImagesPath);
+            image.ImagePath = path;
+            image.Date = DateTime.Now;
             _carImageDal.Add(image);
             return new SuccessResult();
         }
 
         public IResult Delete(CarImage image)
         {
+
+            FileProcess.Delete(_carImageDal.Get(i=>i.Id == image.Id).ImagePath);
             _carImageDal.Delete(image);
             return new SuccessResult();
         }
@@ -48,8 +55,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(i => i.CarId == id));
         }
 
-        public IResult Update(CarImage image)
+        public IResult Update(CarImage image, IFormFile file)
         {
+            var path = FileProcess.Update(file, _carImageDal.Get(i => i.Id == image.Id).ImagePath);
+            image.ImagePath = path;
+            image.Date = DateTime.Now;
             _carImageDal.Update(image);
             return new SuccessResult();
         }

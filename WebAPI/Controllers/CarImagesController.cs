@@ -54,44 +54,22 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add([FromForm] FileUpload objectFile)
         {
-            try
-            {
-                if (objectFile.Files.Length > 0)
-                {
-                    string path = System.IO.Directory.GetCurrentDirectory();
-                    path = System.IO.Directory.GetParent(path).ToString() + "\\Images\\";
 
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    using (FileStream fileStream = System.IO.File.Create(path + Guid.NewGuid().ToString()
-                        + Path.GetExtension(objectFile.Files.FileName)))
-                    {
-                        objectFile.Files.CopyTo(fileStream);
-                        fileStream.Flush();
-                        var image = new CarImage { CarId = objectFile.CarId, ImagePath = fileStream.Name.ToString(), Date = DateTime.Now };
-                        var result = _carImageService.Add(image);
-                        if (result.Success)
-                        {
-                            return Ok(result);
-                        }
-                        return BadRequest(result);
-                    }
-                }
-                return BadRequest("Failed");
-            }
-            catch (Exception ex)
+            var image = new CarImage { CarId = objectFile.CarId };
+            var result = _carImageService.Add(image, objectFile.Files);
+            if (result.Success)
             {
-
-                return BadRequest(ex.Message);
+                return Ok(result);
             }
+            return BadRequest(result);
+
         }
 
         [HttpPost("update")]
-        public IActionResult Update(CarImage image)
+        public IActionResult Update([FromForm] FileUpload objectFile)
         {
-            var result = _carImageService.Update(image);
+            var image = new CarImage { Id = objectFile.Id, CarId = objectFile.CarId };
+            var result = _carImageService.Update(image, objectFile.Files);
             if (result.Success)
             {
                 return Ok(result);
