@@ -57,8 +57,8 @@ namespace Business.Concrete
 
         public IResult Update(CarImage image, IFormFile file)
         {
-            var path = FileProcess.Update(file, _carImageDal.Get(i => i.Id == image.Id).ImagePath);
-            image.ImagePath = path;
+            FileProcess.Delete(_carImageDal.Get(i => i.Id == image.Id).ImagePath);
+            image.ImagePath = FileProcess.Create(file, Paths.ImagesPath);
             image.Date = DateTime.Now;
             _carImageDal.Update(image);
             return new SuccessResult();
