@@ -38,7 +38,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<Customer>>(Messages.MaintenanceTime);
             }
 
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersListed);
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
